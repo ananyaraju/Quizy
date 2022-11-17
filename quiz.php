@@ -8,7 +8,28 @@
     integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
   <link rel="preconnect" href="https://fonts.gstatic.com">
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100;400&display=swap" rel="stylesheet">
-  
+  <script>
+      function save(event, question) {
+        option = document.getElementsByClassName(question)
+        console.log(option[0].classList)
+        if(option[0].classList.contains("selected")){
+          if(!answers.includes(option[0].innerText))
+            answers.push(option[0].innerText)
+        }
+        else if(option[1].classList.contains("selected")){
+          if(!answers.includes(option[1].innerText))
+            answers.push(option[1].innerText)
+        }
+        else if(option[2].classList.contains("selected")){
+          if(!answers.includes(option[2].innerText))
+            answers.push(option[2].innerText)
+        }
+        else{
+          console.log('ille')
+        }
+        console.log(answers)
+      }
+  </script>
   <script src="https://webgazer.cs.brown.edu/webgazer.js?" defer></script>
   <script src="script.js" defer></script>
   <script src="https://cdn.socket.io/4.1.1/socket.io.min.js"
@@ -17,132 +38,72 @@
 
     <link rel="stylesheet" href="../index.css">
 
-  <title>Quiz</title>
-  <style>
-
-  </style>
+    <title>Quiz</title>
+    <?php 
+      $title = $_GET["title"]
+    ?>
 </head>
 
-<body onload=getuser()>
-  <nav class="navbar navbar-light bg-light">
-    <a class="navbar-brand" href="index.html">
-      <img src="../logo.png" width="" height="50" alt="50">
-    </a>
-    <div class="navbar-right user" style="padding: 5px; margin: 10px;">
-      <div class="useritem" id="useritem">
+<body>
+    <nav class="navbar navbar-light bg-light">
+      <a class="navbar-brand" href="index.html">
+        <img src="../logo.png" width="" height="50" alt="50">
+      </a>
+      <div class="navbar-right user" style="padding: 5px; margin: 10px;">
+        <div class="useritem" id="useritem">
+        </div>
+        <img src="../pic.png"></img>
       </div>
-      <img src="../pic.png" />
-    </div>
-  </nav>
-  <div class="container">
+    </nav>
     <div style="text-align: center;">
-      <h1>
-        Quiz
-      </h1>
-      <h3>
-        title here
-      </h3>
+      <h3 style="text-transform: uppercase; font-weight: bold"> <?php echo $title ?> QUIZ</h3>
     </div>
-
-    <div class="row">
-      <div class="col-md-3"> </div>
-      <div class="col-md-6 quiz-box">
-        <div id="question">
-          question
-        </div>
-        <div id="options">
-          <div class="option" onclick="select(this)">
-            documentation
+    <br><br>
+    <form id="f1">
+    <div class="quiz-box" style="margin-left: 35%; margin-right: 10%;">
+    <div class="row" id="quizrow">
+      <?php 
+        include('connection.php');
+		  	$query1=mysqli_query($con,"select distinct question from `questions` where title='$title';") or die(mysqli_error($con));
+		  	while($row=mysqli_fetch_array($query1)) {
+          $question = $row['question'];
+      ?>
+          <div id="question" style="text-align: center">
+            <?php echo $row['question']; ?>
           </div>
-          <div class="option" onclick="select(this)">
-            analysis
+          <br>
+          <?php
+            include('connection.php');
+            $query2=mysqli_query($con,"select `options` from `questions` where question='$question';") or die(mysqli_error($con));
+            while($row=mysqli_fetch_array($query2)) {
+          ?>
+          <div id="options">
+            <input type="radio" onclick="save(this, <?php echo $question ?>)"
+              name="<?php echo $question?>"
+              <?php if (isset($question) && $question==$row['options']) echo "checked";?>
+              value="<?php echo $row['options'];?>">
+              <?php echo $row['options'];?>
+            </input>
           </div>
-          <div class="option" onclick="select(this)">
-            design
-          </div>
-        </div>
-        <div style="display: flex;">
-          <button style="background: #D3544B;
-              width:300px;
-              margin:auto;
-              margin-top: 5px;
-              padding:10px;
-              border-radius:10px;
-              border:none;
-              outline:none;
-              cursor:pointer;
-              color:white;
-              text-transform: uppercase;" onclick="save(this)">Save</button>
-        </div>
-      </div>
-      <div class="col-md-3">
-        <div>
-          <div class="row" style="margin-top: 60px;">
-            <div class="col-md-4">
-              <div onclick="showQuestion(this)">
-                <div class="question-box">1</div>
-              </div>
-            </div>
-            <div class="col-md-4">
-              <div onclick="showQuestion(this)">
-                <div class="question-box">2</div>
-              </div>
-            </div>
-            <div class="col-md-4">
-              <div onclick="showQuestion(this)">
-                <div class="question-box">3</div>
-              </div>
-            </div>
-            <div class="col-md-4">
-              <div onclick="showQuestion(this)">
-                <div class="question-box">4</div>
-              </div>
-            </div>
-            <div class="col-md-4">
-              <div onclick="showQuestion(this)">
-                <div class="question-box">5</div>
-              </div>
-            </div>
-            <div class="col-md-4">
-              <div onclick="showQuestion(this)">
-                <div class="question-box">6</div>
-              </div>
-            </div>
-          </div>
-          <div class="row">
-            <div style="margin-top: 80px; margin-left: 100px; display: flex;
-            justify-content: center;
-            align-items: center;" class="">
-              <button style="background:#2ea100;
-              width:300px;
-              margin:auto;
-              margin-top: 5px;
-              padding:10px;
-              border-radius:10px;
-              border:none;
-              outline:none;
-              cursor:pointer;
-              color:white;
-              text-transform: uppercase;" onclick="window.location.href='complete.html'">Result</button>
-            </div>
-          </div>
-        </div>
-      </div>
+          <br>
+      <?php
+        }
+      ?>
+      <?php
+		    }
+	    ?>
     </div>
-
-
-
-  </div>
-
-  </div>
+    </div>
+    </form>
+    <br><br>
+      <button id="save" style="margin-left: 50%" onclick="saveAns(this)">Save</button>
+      <br><br>
+      <button id="result" style="margin-left: 50%; background-color: #4CAF50;">
+      <a href="complete.php?title=<?php echo $title; ?>" style="color: white;">Result</a>
+    </button>
+      <br><br><br><br>
 </body>
 
-<script>
-
-  var answers = []
-
-
-</script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
   integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>

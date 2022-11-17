@@ -10,6 +10,10 @@
   <link rel="stylesheet" href="../index.css">
 
 <body>
+
+  <?php
+    $title = $_GET['title'];
+  ?>
   <nav class="navbar navI navbar-light bg-light">
     <a class="navbar-brand" href="index.html">
       <img src="../logo.png" width="" height="45" alt="50">
@@ -53,7 +57,7 @@
        
       </div>
       <div class="col-3 float-right" style="margin-top: 25%;">
-        <button type="button" id="proceed" class=" btn btn-success " disabled onclick="window.location.href='quiz.php'">Proceed for exam</button>
+        <button type="button" id="proceed" class=" btn btn-success " disabled><a href="quiz.php?title=<?php echo $title ?>">Proceed for Exam</a></button>
       </div>
 
     </div>
@@ -61,7 +65,7 @@
 
 
 
-  <link rel="stylesheet" href="./assets/css/main.css">
+  <link rel="stylesheet" href="../main.css">
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"
     integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-toast-plugin/1.3.2/jquery.toast.min.js"

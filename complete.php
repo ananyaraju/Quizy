@@ -12,14 +12,25 @@
 <link rel="stylesheet" href="../index.css">
 
 </head>
-<body  onload=" preload(); showResult()">
+<?php
+  $title = $_GET["title"];
+?>
+<body  onload=" preload(); ShowResult()">
+
+<?php
+	$title=$_GET['title'];
+	include('connection.php');
+	mysqli_query($con,"delete from `quizzes` where title='$title'");
+  mysqli_query($con,"delete from `questions` where title='$title'");
+	header('location:complete.php');
+?>
   <!-- Just an image -->
 <nav class="navbar navbar-light bg-light">
   <a class="navbar-brand" href="index.html">
     <img src="../logo.png" width="" height="45" alt="50">
   </a>
 </nav>
-<div class="success-loader overlay" id="preload">
+<div class="success-loader overlay" id="preload" style="text-align: center">
   <img src="../200.gif" alt="">
 </div>
   <div class="container" id="lol">
@@ -28,12 +39,12 @@
         <div id="result-box">
         
             <div style="display: flex; justify-content: center; align-items:center">
-              <div class="row">
-                <img src="../trophy.png" style="margin-top:30px; margin-left:60px" height="120px" alt="">
+              <div class="row" id="completerow">
+                <img src="../trophy.png" style="margin-top:30px; margin-left:25px" height="120px" alt="">
                 <h2>Quiz Completed!</h2>
                 <br>
                 <br>
-                <div style="text-align:center; font-size:30px" id="result"></div>
+                <div style="color: black; margin-left: 1px; font-size:30px" id="finalresult"></div>
                 <div class="text-center" style="padding-top: 10px;">
                 <button class="btn btn-danger" onclick="window.location.href='index.html'">Back to Home</button>
                 </div>
@@ -55,11 +66,19 @@
 function preload(){
   x = document.querySelectorAll("#lol")[0]
   y = document.getElementById("preload")
-  console.log(x)
 setTimeout(()=>{
   //x.classList.remove("display-content")
   y.classList.add("display-content")
 },2000)
+}
+
+function ShowResult() {
+  if ("<?php echo $title?>" === "Microprocessors")
+    document.getElementById("finalresult").innerHTML = "1 POINTS";
+  else if ("<?php echo $title?>" === "demo")
+    document.getElementById("finalresult").innerHTML = "2 POINTS";
+  else
+    document.getElementById("finalresult").innerHTML = "NULL POINTS";
 }
 </script>
 <!-- Latest compiled and minified JavaScript -->

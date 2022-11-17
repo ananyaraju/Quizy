@@ -30,19 +30,18 @@
       <div>
       <?php
 			include('connection.php');
-			$query=mysqli_query($con,"select * from `quizzes`");
+			$query=mysqli_query($con,"select * from `quizzes` where due>CURRENT_DATE();");
 			while($row=mysqli_fetch_array($query)) {
-		?>
+      ?>
 				<div class="col-md-3" id="expandDiv">
                   <h2 style="color: black">Quiz</h2>
                   <h4 style="font-weight: bold"><?php echo $row['title']; ?></h4>
                   <p style="color: black">Open till <?php echo $row['due']; ?></p>
                   <div id="codeBox" style="display:none">
                     <label style="color: black">Enter Code</label>
-                    <input type="text" placeholder="Code" id="enteredCode"/>
-                    <button id="start" onclick="window.location.href='instructions.html'">Start</button>
+                    <input type="text" placeholder="Code" name="enteredCode"></input>
                   </div>
-                  <button id="join" onclick="showCode(1)">Join</button>
+                  <button id="join"><a style="color: white" href="instructions.php?title=<?php echo $row['title']; ?>">Start</a></button>
                 </div>
                 <?php
 			}
@@ -51,28 +50,7 @@
       </div>
       <img src="../Saly-17.png"/>
     </div>
-<script>
-    function showCode(a){
-      for(let i=1;i<=3;i++){
-        var x = document.getElementById(`codeBox`);
-        var y = document.getElementById(`expandDiv`);
-        var z = document.getElementById(`join${i}`);
-        if(a===i){
-          if (x.style.display === "none") {
-            x.style.display = "block";
-            y.classList.add("q2");
-            x.classList.add("inputScale");
-            z.style.display="none";
-          }
-        } else {
-            x.style.display = "none";
-            y.classList.remove("q2");
-            x.classList.remove("inputScale");
-            z.style.display="block";
-          }
-      }
-    }
-</script>
+
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>

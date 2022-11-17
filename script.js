@@ -197,7 +197,6 @@ option[2].classList.remove("selected")
   option[2].innerText=Questions[Number(event.innerText)-1].options[2].option
 console.log(event.innerText)
 }
-
 // var answers =[]
 
 function save(event) {

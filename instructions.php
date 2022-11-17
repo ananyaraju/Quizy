@@ -14,6 +14,10 @@
 </head>
 
 <body>
+  <?php
+  	include('connection.php');
+  	$title=$_GET['title'];
+  ?>
   <nav class="navbar navI navbar-light bg-light">
     <a class="navbar-brand" href="index.html">
       <img src="../logo.png" width="" height="45" alt="50">
@@ -28,7 +32,11 @@
     <div style="color: white;
           font-weight: 500;">
       <h2 style="font-weight: bold">Instructions</h2>
+      <br>
       <div>
+        <span style="font-weight: bold">Quiz Title:
+        <input type="text" style="color: black" id="quiztitle" value="<?php echo $title?>" readonly></input></span><br>
+        <br>
         <p>Read all the instructions properly</p>
         <ol>
           <li>All questions are <b>multiple choice questions.</b></li>
@@ -39,10 +47,14 @@
           <li>Malpractices will be recorded and you might be logged out of the exam.</li>
         </ol>
         <p>Click "Result" only after completition of the Exam.</p>
-
+      <div>
+        
       </div>
-      <button class="btn btn-danger" onclick="window.location.href='env.html'">Start Test</button>
-    </div>
+      </div>
+      <button class="btn btn-danger">
+        <a style="color: white;" href="env.php?title=<?php echo $title; ?>">Start Test</a>
+      </button>
+      </div>
     <div>
       <img src="../Saly-26.png" />
     </div>
