@@ -83,7 +83,7 @@ function upload_image() {
     const ctx = canvas.getContext("2d");
 
     var input_elem = document.querySelector('input[type=file]')
-    var file = input_elem.files[0]; //sames as here
+    var file = input_elem.files[0];
     const image = document.getElementById('img');
 
     var reader = new FileReader();

@@ -75,7 +75,7 @@ setTimeout(()=>{
 function ShowResult() {
   if ("<?php echo $title?>" === "Microprocessors")
     document.getElementById("finalresult").innerHTML = "1 POINTS";
-  else if ("<?php echo $title?>" === "demo")
+  else if ("<?php echo $title?>" === "demo" || "<?php echo $title?>" === "Software Engineering")
     document.getElementById("finalresult").innerHTML = "2 POINTS";
   else
     document.getElementById("finalresult").innerHTML = "NULL POINTS";

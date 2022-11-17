@@ -60,7 +60,7 @@
     </div>
     <br><br>
     <form id="f1">
-    <div class="quiz-box" style="margin-left: 35%; margin-right: 10%;">
+    <div class="" style="margin-left: 35%; margin-right: 10%;">
     <div class="row" id="quizrow">
       <?php 
         include('connection.php');
@@ -96,9 +96,9 @@
     </div>
     </form>
     <br><br>
-      <button id="save" style="margin-left: 50%" onclick="saveAns(this)">Save</button>
+      <button id="save" style="margin-left: 50%; margin-top: 700px;" onclick="saveAns(this)">Save</button>
       <br><br>
-      <button id="result" style="margin-left: 50%; background-color: #4CAF50;">
+      <button id="result" style="margin-left: 50%; margin-top: 50px; background-color: #4CAF50;">
       <a href="complete.php?title=<?php echo $title; ?>" style="color: white;">Result</a>
     </button>
       <br><br><br><br>
